@@ -16,6 +16,7 @@ import java.awt.GraphicsEnvironment;
 /** Runs ImageJ menu commands in a separate thread.*/
 public class Executer implements Runnable {
 
+	
 	private static String previousCommand;
 	private static CommandListener listener;
 	private static Vector listeners = new Vector();
