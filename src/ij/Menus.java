@@ -33,8 +33,7 @@ public class Menus {
 	public static final char ABOUT_MENU = 'a';
 	public static final char FILTERS_MENU = 'f';
 	public static final char TOOLS_MENU = 't';
-	public static final char UTILITIES_MENU = 'u';
-	public static final String TEST_SONNAR = 'SONNAR';	
+	public static final char UTILITIES_MENU = 'u';	
 	public static final int WINDOW_MENU_ITEMS = 6; // fixed items at top of Window menu
 	
 	public static final int NORMAL_RETURN = 0;
