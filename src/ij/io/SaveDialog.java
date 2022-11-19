@@ -104,6 +104,10 @@ public class SaveDialog {
 	// Save using JFileChooser.
 	// assumes we are running on the event dispatch thread
 	void jSaveDispatchThread(String title, String defaultDir, String defaultName) {
+		showFileChooser(title,defaultDir, defaultName );
+	}
+
+	void showFileChooser(String title, String defaultDir, String defaultName)  {
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle(title);
 		fc.setDragEnabled(true);
@@ -117,13 +121,13 @@ public class SaveDialog {
 			fc.setSelectedFile(new File(defaultName));
 		int returnVal = fc.showSaveDialog(IJ.getInstance());
 		if (returnVal!=JFileChooser.APPROVE_OPTION)
-			{Macro.abort(); return;}
+		{Macro.abort(); return;}
 		File f = fc.getSelectedFile();
 		if(f.exists()) {
 			int ret = JOptionPane.showConfirmDialog (fc,
-				"The file "+ f.getName() + " already exists. \nWould you like to replace it?",
-				"Replace?",
-				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					"The file "+ f.getName() + " already exists. \nWould you like to replace it?",
+					"Replace?",
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (ret!=JOptionPane.OK_OPTION) f = null;
 		}
 		if (f==null)
@@ -145,39 +149,7 @@ public class SaveDialog {
 		try {
 			EventQueue.invokeAndWait(new Runnable() {
 				public void run() {
-					JFileChooser fc = new JFileChooser();
-					fc.setDialogTitle(title);
-					fc.setDragEnabled(true);
-					fc.setTransferHandler(new DragAndDropHandler(fc));
-					if (defaultDir!=null) {
-						File f = new File(defaultDir);
-						if (f!=null)
-							fc.setCurrentDirectory(f);
-					}
-					if (defaultName!=null)
-						fc.setSelectedFile(new File(defaultName));
-					int returnVal = fc.showSaveDialog(IJ.getInstance());
-					if (returnVal!=JFileChooser.APPROVE_OPTION)
-						{Macro.abort(); return;}
-					File f = fc.getSelectedFile();
-					if(f.exists()) {
-						int ret = JOptionPane.showConfirmDialog (fc,
-							"The file "+ f.getName() + " already exists. \nWould you like to replace it?",
-							"Replace?",
-							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-						if (ret!=JOptionPane.OK_OPTION) f = null;
-					}
-					if (f==null)
-						Macro.abort();
-					else {
-						dir = fc.getCurrentDirectory().getPath()+File.separator;
-						name = fc.getName(f);
-						if (noExtension(name)) {
-							if (".raw".equals(ext))
-								ext = null;
-							name = setExtension(name, ext);
-						}
-					}
+					showFileChooser(title,defaultDir, defaultName );
 				}
 			});
 		} catch (Exception e) {}
